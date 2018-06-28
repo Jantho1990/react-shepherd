@@ -1,14 +1,19 @@
-export default (state = {}, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case 'ADD_QUESTION':
-      console.log('Not implemented')
-      return state
+      return [
+        ...state,
+        action.question
+      ]
     case 'EDIT_QUESTION':
-      console.log('Not implemented')
-      return state
+      return state.map(item => {
+        if (item.id === action.question.id) {
+          return action.question
+        }
+        return item
+      })
     case 'DELETE_QUESTION':
-      console.log('Not implemented')
-      return state
+      return state.filter(item => item.id !== action.id)
     default:
       return state
   }
