@@ -1,4 +1,4 @@
-export default questionsReducer = (state = {}, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case 'ADD_QUESTION':
       console.log('Not implemented')

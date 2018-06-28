@@ -4,7 +4,7 @@ import {
   gamesReducer,
   playersReducer,
   questionsReducer
-} from 'src/reducers/'
+} from '../reducers/reducers'
 
 
 export const configure = (initialState = {}) => {

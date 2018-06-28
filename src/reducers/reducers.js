@@ -3,7 +3,7 @@ import gamesReducer from './games'
 import playersReducer from './players'
 import questionsReducer from './questions'
 
-export default {
+export {
   answersReducer,
   gamesReducer,
   playersReducer,
