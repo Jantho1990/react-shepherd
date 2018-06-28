@@ -1,17 +1,33 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import QuestionsList from '../lists/QuestionsList'
+import QuestionViewForm from '../forms/QuestionViewForm'
 
-class QuestionsPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  };
-    }
-    render() {
-        return (
-            <div className="page questions">
-                <h1>Questions Page</h1>
-            </div>
-        )
-    }
+export class QuestionsPage extends Component {
+  static defaultProps = {
+    questions: [
+      {
+        id: 1,
+        text: 'Is this not a question?'
+      }
+    ]
+  }
+  render() {
+    let { questions } = this.props
+    return (
+      <div className="page questions">
+        <h1>Questions Page</h1>
+        <QuestionsList questions={questions}/>
+        <QuestionViewForm/>
+      </div>
+    )
+  }
 }
 
-export default QuestionsPage;
+export default connect(
+  (state, ownProps) => {
+    return {
+      questions: state.questions
+    }
+  }
+)(QuestionsPage)
