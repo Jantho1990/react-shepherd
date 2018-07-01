@@ -10,12 +10,14 @@ describe('Answers', () => {
       let action = {
         type: 'ADD_ANSWER',
         answer: {
-          name: 'this is an answer'
+          text: 'this is an answer',
+          id: 0,
+          players: []
         }
       }
 
       let res = actions.answers.add({
-        name: 'this is an answer'
+        text: 'this is an answer'
       })
 
       expect(res).toEqual(action)
@@ -25,12 +27,12 @@ describe('Answers', () => {
       let action = {
         type: 'EDIT_ANSWER',
         answer: {
-          name: 'this is a different answer'
+          text: 'this is a different answer'
         }
       }
 
       let res = actions.answers.edit({
-        name: 'this is a different answer'
+        text: 'this is a different answer'
       })
 
       expect(res).toEqual(action)

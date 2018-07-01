@@ -10,15 +10,19 @@ describe('Questions', () => {
       let action = {
         type: 'ADD_QUESTION',
         question: {
-          name: 'this is a question'
+          id: 0,
+          text: 'this is a question',
+          answers: []
         }
       }
 
       let res = actions.questions.add({
-        name: 'this is a question'
+        text: 'this is a question'
       })
 
-      expect(res).toEqual(action)
+      expect(res.text).toEqual(action.text)
+      expect(res.id).toBe(action.id)
+      expect(res.answers).toEqual(action.answers)
     })
 
     test('generates editQuestion action', () => {

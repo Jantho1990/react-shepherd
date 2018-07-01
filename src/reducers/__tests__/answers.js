@@ -11,8 +11,9 @@ describe('Answers', () => {
       let action = {
         type: 'ADD_ANSWER',
         answer: {
-          id: 1,
-          text: 'this is an answer'
+          id: 0,
+          text: 'this is an answer',
+          players: []
         }
       }
 
@@ -20,6 +21,8 @@ describe('Answers', () => {
 
       expect(res.length).toBe(1)
       expect(res[0].text).toBe('this is an answer')
+      expect(res[0].id).toBe(0)
+      expect(res[0].players).toEqual([])
     })
     
     test('edit a answer', () => {

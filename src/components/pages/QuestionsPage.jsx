@@ -18,7 +18,10 @@ export class QuestionsPage extends Component {
       <div className="page questions">
         <h1>Questions Page</h1>
         <QuestionsList questions={questions}/>
-        <QuestionViewForm/>
+        <div>
+          <span>New Question</span>
+          <QuestionViewForm/>
+        </div>
       </div>
     )
   }

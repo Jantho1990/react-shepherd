@@ -1,8 +1,16 @@
-export const addAnswer = answer => {
-    return {
-        type: 'ADD_ANSWER',
-        answer
+import questions from './questions'
+
+let answerId = 0
+export const addAnswer = (answer, questionId) => {
+  return {
+    type: 'ADD_ANSWER',
+    answer: {
+      text: answer.text,
+      id: answerId++,
+      players: [],
+      questionId
     }
+  }
 }
 
 export const editAnswer = answer => {

@@ -1,14 +1,24 @@
+let answerId = 0
 export const addQuestion = question => {
     return {
         type: 'ADD_QUESTION',
-        question
+        question: {
+            text: question.text,
+            id: answerId++,
+            answers: []
+        }
     }
 }
 
 export const editQuestion = question => {
     return {
         type: 'EDIT_QUESTION',
-        question
+        question: {
+            /* text: question.text,
+            id: question.id,
+            answers: question.answers */
+            ...question
+        }
     }
 }
 

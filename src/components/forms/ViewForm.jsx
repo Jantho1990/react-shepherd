@@ -11,8 +11,8 @@ class ViewForm extends Component {
             case 'Enter':
                 e.preventDefault()
                 let {dispatch} = this.props
-                dispatch(this.reduxAction())
-                callback()
+                let nextState = dispatch(this.reduxAction())
+                callback(nextState)
                 break
             default:
                 break

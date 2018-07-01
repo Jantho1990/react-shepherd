@@ -12,7 +12,7 @@ class QuestionsList extends Component {
         )
       }
       return questions.map(question => {
-        console.log(question)
+        console.log('ribbit', question)
         return (
           <QuestionWrapper key={question.id} {...question}/>
         )

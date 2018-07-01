@@ -1,8 +1,9 @@
 import React from 'react'
-import ViewForm from './ViewForm'
 import { connect } from 'react-redux'
+import ViewForm from './ViewForm'
+import actions from '../../actions/actions'
 
-class QuestionForm extends ViewForm {
+class QuestionViewForm extends ViewForm {
   constructor(props) {
     super(props)
     this.state = {}
@@ -16,12 +17,7 @@ class QuestionForm extends ViewForm {
   }
 
   reduxAction() {
-    return {
-      type: 'ADD_QUESTION',
-      'question': {
-        text: this.refs.questionText.value
-      }
-    }
+    return actions.questions.add({text: this.refs.questionText.value})
   }
 
   render() {
@@ -35,4 +31,4 @@ class QuestionForm extends ViewForm {
   }
 }
 
-export default connect()(QuestionForm)
+export default connect()(QuestionViewForm)
