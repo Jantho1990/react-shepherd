@@ -37,7 +37,8 @@ function deleteAnswer(state, action) {
 }
 
 function deleteAnswersByQuestionId(state, action) {
-  const newAnswers = state.answers.filter(answer => answer.questionId === action.id)
+  let { id: questionId } = action.payload
+  const newAnswers = state.answers.filter(answer => answer.questionId !== questionId)
 
   return updateObject(state, {answers: newAnswers})
 }

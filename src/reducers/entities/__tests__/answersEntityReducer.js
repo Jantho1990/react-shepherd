@@ -21,14 +21,22 @@ const testAnswers = [
   {
     id: 0,
     text: 'Yes',
-    questionId: 1,
-    players: [0]
+    questionId: 1
   },
   {
     id: 1,
     text: 'No',
-    questionId: 1,
-    players: [1, 2]
+    questionId: 1
+  },
+  {
+    id: 2,
+    text: 'Yes',
+    questionId: 0
+  },
+  {
+    id: 3,
+    text: 'No',
+    questionId: 0
   }
 ]
 
@@ -53,22 +61,21 @@ const initialState = {
   questions: testQuestions
 }
 setQuestionId(2)
-setAnswerId(2)
+setAnswerId(4)
 
 describe('Answer Entities', () => {
   it('creates a new answer', () => {
     const answer = {
       text: 'I am a new answer!',
-      questionId: 1,
-      players: []
+      questionId: 1
     }
     const action = actions.answers.add(answer)
 
     const res = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(3)
-    let nta = res.answers[2]
-    expect(nta.id).toBe(2)
+    expect(res.answers.length).toBe(initialState.answers.length + 1)
+    let nta = res.answers[4]
+    expect(nta.id).toBe(4)
     expect(nta.text).toBe(answer.text)
     expect(nta.questionId).toBe(answer.questionId)
   })
@@ -77,19 +84,17 @@ describe('Answer Entities', () => {
     const answer = {
       id: 1,
       text: 'NEVER',
-      questionId: 1,
-      players: [1, 2]
+      questionId: 1
     }
     const action = actions.answers.edit(answer)
 
     const res = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(2)
+    expect(res.answers.length).toBe(initialState.answers.length)
     let uta = res.answers[1]
     expect(uta.id).toBe(answer.id)
     expect(uta.text).toBe(answer.text)
     expect(uta.questionId).toBe(answer.questionId)
-    expect(uta.players).toEqual(answer.players)
   })
 
   it('should not need all properties in order to edit', () => {
@@ -101,12 +106,11 @@ describe('Answer Entities', () => {
 
     const res = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(2)
+    expect(res.answers.length).toBe(initialState.answers.length)
     let uta = res.answers[0]
     expect(uta.id).toBe(answer.id)
     expect(uta.text).toBe(answer.text)
     expect(uta.questionId).toBe(1)
-    expect(uta.players[0]).toBe(0)
   })
 
   it('deletes an answer', () => {
@@ -115,7 +119,16 @@ describe('Answer Entities', () => {
 
     const res = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(1)
+    expect(res.answers.length).toBe(initialState.answers.length - 1)
     expect(res.answers.filter(answer => answer.id === answerId).length).not.toBe(1)
+  })
+
+  it('deletes any answers associated with a deleted question', () => {
+    const questionId = 1
+    const action = actions.questions.delete(questionId)
+
+    const res = ar(df({...initialState}), df(action))
+
+    expect(res.answers.length).toBe(2)
   })
 })
