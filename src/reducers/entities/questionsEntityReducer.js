@@ -3,6 +3,7 @@ import {
   updateItemInArray,
   createReducer
 } from '../helpers'
+import { CLIENT_RENEG_WINDOW } from 'tls';
 
 function addQuestion(state, action) {
   const { answers, id, text } = action.payload
@@ -16,11 +17,10 @@ function addQuestion(state, action) {
 }
 
 function editQuestion(state, action) {
-  const { answers, id, text } = action.payload
+  const { id } = action.payload
   const newQuestions = updateItemInArray(state.questions, id, question => {
     return updateObject(question, {
-      text,
-      answers
+      ...action.payload
     })
   })
 

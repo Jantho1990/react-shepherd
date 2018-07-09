@@ -11,7 +11,7 @@ const testQuestions = [
   {
     id: 2,
     text: 'Will this test ever end?',
-    answers: []
+    answers: [1, 2]
   }
 ]
 
@@ -65,15 +65,18 @@ describe('Question Entities', () => {
   })
 
   it('edits an existing question', () => {
-    let tq = {...testQuestions[0]}
-    tq.text = "This is different?"
+    let tq = {
+      id: 2,
+      text: "This is different?"
+    }
     const action = actions.questions.edit(tq)
 
     let newState = qr(df({...initialState}), df(action))
 
     expect(newState.questions.length).toBe(2)
-    expect(newState.questions[0].text).toBe(tq.text)
-    expect(newState.questions[0].id).toBe(tq.id)
+    expect(newState.questions[1].text).toBe(tq.text)
+    expect(newState.questions[1].id).toBe(tq.id)
+    expect(newState.questions[1].answers.length).toBe(2)
   })
 
   it('deletes a question', () => {
