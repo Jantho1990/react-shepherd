@@ -16,10 +16,11 @@ function addQuestion(state, action) {
 }
 
 function editQuestion(state, action) {
-  const newQuestions = updateItemInArray(state.questions, action.id, question => {
+  const { answers, id, text } = action.payload
+  const newQuestions = updateItemInArray(state.questions, id, question => {
     return updateObject(question, {
-      text: action.text,
-      answers: action.answers
+      text,
+      answers
     })
   })
 
@@ -27,7 +28,8 @@ function editQuestion(state, action) {
 }
 
 function deleteQuestion(state, action) {
-  const newQuestions = state.questions.filter(question => question.id !== action.id)
+  let { id } = action.payload
+  const newQuestions = state.questions.filter(question => question.id !== id)
 
   return updateObject(state, {questions: newQuestions})
 }

@@ -15,29 +15,61 @@ const testQuestions = [
   }
 ]
 
+const testAnswers = [
+  {
+    id: 1,
+    text: 'Yes',
+    questionId: 2
+  },
+  {
+    id: 2,
+    text: 'No',
+    questionId: 2
+  }
+]
+
+const testPlayers = [
+  {
+    id: 1,
+    name: 'John Doe'
+  },
+  {
+    id: 2,
+    name: 'Finnegan Shaw'
+  },
+  {
+    id: 3,
+    name: 'Alicia Halibut'
+  }
+]
+
 const initialState = {
-  answers: [],
-  players: [],
-  questions: []
+  answers: testAnswers,
+  players: testPlayers,
+  questions: testQuestions
 }
 
 describe('Question Entities', () => {
   it('creates a new question', () => {
-    const [ tq ] = testQuestions
+    const tq = {
+      id: 3,
+      text: 'Will this test succeed?',
+      answers: []
+    }
     const action = actions.questions.add(tq)
 
-    let newState = qr(df(initialState), df(action))
+    let newState = qr(df({...initialState}), df(action))
 
-    expect(newState.questions.length).toBe(1)
-    expect(newState.questions[0].text).toBe(tq.text)
+    expect(newState.questions.length).toBe(3)
+    expect(newState.questions[2].text).toBe(tq.text)
   })
 
   it('edits an existing question', () => {
-    const [ tq ] = testQuestions
+    let tq = {...testQuestions[0]}
     tq.text = "This is different?"
     const action = actions.questions.edit(tq)
 
-    let newState = qr(df({ questions: testQuestions }), df(action))
+    let newState = qr(df({...initialState}), df(action))
 
     expect(newState.questions.length).toBe(2)
     expect(newState.questions[0].text).toBe(tq.text)
@@ -48,7 +80,7 @@ describe('Question Entities', () => {
     const id = testQuestions[0].id
     const action = actions.questions.delete(id)
 
-    let newState = qr(df({ questions: testQuestions }), df(action))
+    let newState = qr(df({...initialState}), df(action))
 
     expect(newState.questions.length).toBe(1)
     expect(newState.questions.filter(q => q.id === id).length).toBe(0)

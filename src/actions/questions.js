@@ -20,7 +20,7 @@ export const editQuestion = updatedQuestion => {
 export const deleteQuestion = id => {
     return {
         type: 'DELETE_QUESTION',
-        id
+        payload: { id }
     }
 }
 
