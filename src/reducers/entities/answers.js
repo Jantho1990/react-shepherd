@@ -31,8 +31,34 @@ function deleteAnswer(state, action) {
   return updateObject(state, {answers: newAnswers})
 }
 
+function associatePlayer(state, action) {
+  const newAnswers = updateItemInArray(state.answers, action.answerId, answer => {
+    return updateObject(answer, {
+      ...answer,
+      players: [
+        ...answer.players,
+        action.id
+      ]
+    })
+  })
+
+  return updateObject(state, {answers: newAnswers})
+}
+
+function disassociatePlayer(state, action) {
+  const newAnswers = updateItemInArray(state.answers, action.answerId, answer => {
+    return updateObject(answer, {
+      ...answer,
+      players: answer.players.filter(playerId => playerId !== action.id)
+    })
+  })
+
+  return updateObject(state, {answers: newAnswers})
+}
+
 export default answersReducer = createReducer(answersState = [], {
   'ADD_ANSWER': addAnswer,
   'EDIT_ANSWER': editAnswer,
-  'DELETE_ANSWER': deleteAnswer
+  'DELETE_ANSWER': deleteAnswer,
+  'DELETE_PLAYER': disassociatePlayer
 })

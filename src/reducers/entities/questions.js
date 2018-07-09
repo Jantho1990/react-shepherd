@@ -36,11 +36,13 @@ function associateAnswer(state, action) {
     return updateObject(question, {
       ...question,
       answers: [
-        ...answers,
+        ...question.answers,
         action.id
       ]
     })
   })
+
+  return updateObject(state, {questions: newQuestions})
 }
 
 function disassociateAnswer(state, action) {
@@ -50,6 +52,8 @@ function disassociateAnswer(state, action) {
       answers: question.answers.filter(answerId => answerId !== action.id)
     })
   })
+
+  return updateObject(state, {questions: newQuestions})
 }
 
 export default questionsReducer = createReducer(questionsState = [], {
