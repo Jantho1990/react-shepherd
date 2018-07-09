@@ -66,17 +66,35 @@ describe('Question Entities', () => {
 
   it('edits an existing question', () => {
     let tq = {
-      id: 2,
-      text: "This is different?"
+      ...testQuestions[1],
+      text: 'This is different?',
+      thisProp: 'Should not show up'
     }
     const action = actions.questions.edit(tq)
 
     let newState = qr(df({...initialState}), df(action))
 
     expect(newState.questions.length).toBe(2)
-    expect(newState.questions[1].text).toBe(tq.text)
-    expect(newState.questions[1].id).toBe(tq.id)
-    expect(newState.questions[1].answers.length).toBe(2)
+    let utq = newState.questions[1]
+    expect(utq.text).toBe(tq.text)
+    expect(utq.id).toBe(tq.id)
+    expect(utq.answers.length).toBe(2)
+    expect(utq.thisProp).toBeUndefined()
+  })
+
+  it('should not need all properties in order to edit', () => {
+    let tq = {
+      id: 2,
+      text: 'I should update even though I do not have answers'
+    }
+    const action = actions.questions.edit(tq)
+
+    let newState = qr(df({...initialState}), df(action))
+
+    expect(newState.questions.length).toBe(2)
+    let utq = newState.questions[1]
+    expect(utq.text).toBe(tq.text)
+    expect(utq.answers.length).toBe(2)
   })
 
   it('deletes a question', () => {

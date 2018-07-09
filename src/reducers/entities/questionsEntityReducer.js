@@ -17,10 +17,11 @@ function addQuestion(state, action) {
 }
 
 function editQuestion(state, action) {
-  const { id } = action.payload
+  const { answers, id, text } = action.payload
   const newQuestions = updateItemInArray(state.questions, id, question => {
     return updateObject(question, {
-      ...action.payload
+      text: text || question.text,
+      answers: answers || question.answers
     })
   })
 
