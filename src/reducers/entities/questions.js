@@ -26,9 +26,15 @@ function editQuestion(state, action) {
 }
 
 function deleteQuestion(state, action) {
-  const newQuestions = state.questions.filter(question => question.id === action.id)
+  // Remove any answers associated with this question.
+  const newAnswers = state.answers.filter(answer => answer.questionId !== action.id)
 
-  return updateObject(state, {questions: newQuestions})
+  const newQuestions = state.questions.filter(question => question.id !== action.id)
+
+  return updateObject(state, {
+    answers: newAnswers,
+    questions: newQuestions
+  })
 }
 
 function associateAnswer(state, action) {

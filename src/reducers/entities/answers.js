@@ -26,7 +26,7 @@ function editAnswer(state, action) {
 }
 
 function deleteAnswer(state, action) {
-  const newAnswers = state.answers.filter(answer => answer.id === action.id)
+  const newAnswers = state.answers.filter(answer => answer.id !== action.id)
 
   return updateObject(state, {answers: newAnswers})
 }

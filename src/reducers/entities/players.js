@@ -30,11 +30,9 @@ function editPlayer(state, action) {
 }
 
 function deletePlayer(state, action) {
-  const newPlayers = state.players.filter(player => player.id === action.id)
+  const newPlayers = state.players.filter(player => player.id !== action.id)
 
-  return updateObject(state, {
-    players: newPlayers
-  })
+  return updateObject(state, { players: newPlayers })
 }
 
 export default playersReducer = createReducer(playersState = [], {
