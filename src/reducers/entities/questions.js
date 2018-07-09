@@ -45,7 +45,7 @@ function associateAnswer(state, action) {
   return updateObject(state, {questions: newQuestions})
 }
 
-function disassociateAnswer(state, action) {
+function disassociateAnswers(state, action) {
   const newQuestions = updateItemInArray(state.questions, action.questionId, question => {
     return updateObject(question, {
       ...question,
@@ -61,5 +61,5 @@ export default questionsReducer = createReducer(questionsState = [], {
   'EDIT_QUESTION': editQuestion,
   'DELETE_QUESTION': deleteQuestion,
   'ADD_ANSWER': associateAnswer,
-  'DELETE_ANSWER': disassociateAnswer
+  'DELETE_ANSWER': disassociateAnswers
 })

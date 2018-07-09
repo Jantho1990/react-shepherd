@@ -50,7 +50,7 @@ function associateAnswerPlayer(state, action) {
   return updateObject(state, {answersPlayers: newAnswersPlayers})
 }
 
-function disassociateAnswerPlayer(state, action) {
+function disassociateEntitiesAnswerPlayer(state, action) {
   const { answersPlayers } = state
   
   const answersPlayers = answersPlayers.filter(answerPlayer => {
@@ -90,7 +90,7 @@ function associatePlayerAnswer(state, action) {
   return updateObject(state, { answersPlayers: newAnswersPlayers })
 }
 
-function disassociatePlayerAnswer(state, action) {
+function disassociateEntitiesPlayerAnswer(state, action) {
   const { answersPlayers } = state
   
   const answersPlayers = answersPlayers.filter(answerPlayer => {
@@ -102,7 +102,7 @@ function disassociatePlayerAnswer(state, action) {
 
 export default answersPlayersReducer = createReducer(initialState = [], {
   'EDIT_ANSWER': associateAnswerPlayer,
-  'DELETE_ANSWER': disassociateAnswerPlayer,
+  'DELETE_ANSWER': disassociateEntitiesAnswerPlayer,
   'EDIT_PLAYER': associatePlayerAnswer,
-  'DELETE_PLAYER': disassociatePlayerAnswer
+  'DELETE_PLAYER': disassociateEntitiesPlayerAnswer
 })
