@@ -1,4 +1,7 @@
 let questionId = 0
+// The following is for testing purposes only.
+export const setQuestionId = id => questionId = id
+
 export const addQuestion = question => {
     return {
         type: 'ADD_QUESTION',

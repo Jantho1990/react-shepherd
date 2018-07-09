@@ -1,34 +1,35 @@
-import questions from './questions'
-
 let answerId = 0
-export const addAnswer = (answer, questionId) => {
+// The following is for testing purposes only.
+export const setAnswerId = id => answerId = id
+
+export const addAnswer = answer => {
   return {
     type: 'ADD_ANSWER',
-    answer: {
-      text: answer.text,
+    payload: {
       id: answerId++,
-      players: [],
-      questionId
+      text: answer.text,
+      questionId: answer.questionId,
+      players: []
     }
   }
 }
 
 export const editAnswer = answer => {
-    return {
-        type: 'EDIT_ANSWER',
-        answer
-    }
+  return {
+    type: 'EDIT_ANSWER',
+    answer
+  }
 }
 
 export const deleteAnswer = id => {
-    return {
-        type: 'DELETE_ANSWER',
-        id
-    }
+  return {
+    type: 'DELETE_ANSWER',
+    payload: { id }
+  }
 }
 
 export default {
-    add: addAnswer,
-    edit: editAnswer,
-    delete: deleteAnswer
+  add: addAnswer,
+  edit: editAnswer,
+  delete: deleteAnswer
 }

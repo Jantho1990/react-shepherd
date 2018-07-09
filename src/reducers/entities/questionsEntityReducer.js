@@ -36,12 +36,13 @@ function deleteQuestion(state, action) {
 }
 
 function associateAnswer(state, action) {
-  const newQuestions = updateItemInArray(state.questions, action.questionId, question => {
+  let { id: answerId, questionId } = action.payload
+  const newQuestions = updateItemInArray(state.questions, questionId, question => {
     return updateObject(question, {
       ...question,
       answers: [
         ...question.answers,
-        action.id
+        answerId
       ]
     })
   })
@@ -50,10 +51,11 @@ function associateAnswer(state, action) {
 }
 
 function disassociateAnswers(state, action) {
-  const newQuestions = updateItemInArray(state.questions, action.questionId, question => {
+  let { id: answerId } = action.payload
+  const newQuestions = state.questions.map(question => {
     return updateObject(question, {
       ...question,
-      answers: question.answers.filter(answerId => answerId !== action.id)
+      answers: question.answers.filter(id => id !== answerId)
     })
   })
 
