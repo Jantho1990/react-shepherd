@@ -50,6 +50,16 @@ function associateAnswerPlayer(state, action) {
   return updateObject(state, {answersPlayers: newAnswersPlayers})
 }
 
+function disassociateAnswerPlayer(state, action) {
+  const { answersPlayers } = state
+  
+  const answersPlayers = answersPlayers.filter(answerPlayer => {
+    return answerPlayer.answerId !== action.id
+  })
+
+  return updateObject(state, { answersPlayers: newAnswersPlayers })
+}
+
 function associatePlayerAnswer(state, action) {
   const { answersPlayers } = state
   const playerId = action.id
@@ -76,6 +86,16 @@ function associatePlayerAnswer(state, action) {
   }
 
   const newAnswersPlayers = associateEntities(answersPlayers, entityIds)
+
+  return updateObject(state, { answersPlayers: newAnswersPlayers })
+}
+
+function disassociatePlayerAnswer(state, action) {
+  const { answersPlayers } = state
+  
+  const answersPlayers = answersPlayers.filter(answerPlayer => {
+    return answerPlayer.playerId !== action.id
+  })
 
   return updateObject(state, { answersPlayers: newAnswersPlayers })
 }
