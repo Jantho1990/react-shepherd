@@ -1,7 +1,7 @@
-import answersReducer from './answers'
-import gamesReducer from './games'
-import playersReducer from './players'
-import questionsReducer from './questions'
+import answersReducer from './entities/answers'
+import gamesReducer from './entities/games'
+import playersReducer from './entities/players'
+import questionsReducer from './entities/questionsEntityReducer'
 
 export {
   answersReducer,

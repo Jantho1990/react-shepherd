@@ -5,10 +5,11 @@ import {
 } from '../helpers'
 
 function addQuestion(state, action) {
+  const { answers, id, text } = action.payload
   const newQuestions = state.questions.concat({
-    id: action.id,
-    text: action.text,
-    answers: action.answers
+    id,
+    text,
+    answers
   })
 
   return updateObject(state, {questions: newQuestions})
@@ -56,7 +57,7 @@ function disassociateAnswers(state, action) {
   return updateObject(state, {questions: newQuestions})
 }
 
-export default questionsReducer = createReducer(questionsState = [], {
+export default createReducer([], {
   'ADD_QUESTION': addQuestion,
   'EDIT_QUESTION': editQuestion,
   'DELETE_QUESTION': deleteQuestion,

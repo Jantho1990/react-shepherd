@@ -37,7 +37,7 @@ function deleteAnswersByQuestionId(state, action) {
   return updateObject(state, {answers: newAnswers})
 }
 
-export default answersReducer = createReducer(answersState = [], {
+export default answersReducer = createReducer([], {
   'ADD_ANSWER': addAnswer,
   'EDIT_ANSWER': editAnswer,
   'DELETE_ANSWER': deleteAnswer,

@@ -12,6 +12,8 @@ export function updateItemInArray(array, itemId, updateItemCallback) {
     const updatedItem = updateItemCallback(item)
     return updatedItem
   })
+
+  return updatedItems
 }
 
 export function createReducer(initialState, handlers) {

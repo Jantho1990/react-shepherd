@@ -1,24 +1,19 @@
-let answerId = 0
+let questionId = 0
 export const addQuestion = question => {
     return {
         type: 'ADD_QUESTION',
-        question: {
+        payload: {
             text: question.text,
-            id: answerId++,
+            id: questionId++,
             answers: []
         }
     }
 }
 
-export const editQuestion = question => {
+export const editQuestion = updatedQuestion => {
     return {
         type: 'EDIT_QUESTION',
-        question: {
-            /* text: question.text,
-            id: question.id,
-            answers: question.answers */
-            ...question
-        }
+        payload: updatedQuestion
     }
 }
 

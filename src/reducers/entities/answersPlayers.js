@@ -100,7 +100,7 @@ function disassociateEntitiesPlayerAnswer(state, action) {
   return updateObject(state, { answersPlayers: newAnswersPlayers })
 }
 
-export default answersPlayersReducer = createReducer(initialState = [], {
+export default answersPlayersReducer = createReducer([], {
   'EDIT_ANSWER': associateAnswerPlayer,
   'DELETE_ANSWER': disassociateEntitiesAnswerPlayer,
   'EDIT_PLAYER': associatePlayerAnswer,

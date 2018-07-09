@@ -35,7 +35,7 @@ function deletePlayer(state, action) {
   return updateObject(state, { players: newPlayers })
 }
 
-export default playersReducer = createReducer(playersState = [], {
+export default playersReducer = createReducer([], {
   'ADD_PLAYER': addPlayer,
   'EDIT_PLAYER': editPlayer,
   'DELETE_PLAYER': deletePlayer
