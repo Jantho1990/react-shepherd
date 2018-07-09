@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "answers": [
+      {
+        "id": 1,
+        "text": "Yes",
+        "questionId": 1,
+        "players": [1, 3],
+        "points": 1
+      },
+      {
+        "id": 2,
+        "text": "No",
+        "questionId": 1,
+        "players": [2],
+        "points": 0
+      },
+      {
+        "id": 3,
+        "text": "Red",
+        "questionId": 2,
+        "players": [3],
+        "points": 0
+      },
+      {
+        "id": 4,
+        "text": "Blue",
+        "questionId": 2,
+        "players": [1, 2],
+        "points": 1
+      },
+      {
+        "id": 5,
+        "text": "Yellow",
+        "questionId": 2,
+        "players": [],
+        "points": 0
+      }
+    ],
+    "players": [
+      {
+        "id": 1,
+        "name": "mAc Chaos",
+        "answers": [1, 4],
+        "points": 2
+      },
+      {
+
+        "id": 2,
+        "name": "Lavarinth",
+        "answers": [2, 4],
+        "points": 1
+      },
+      {
+
+        "id": 3,
+        "name": "Aekenon",
+        "answers": [1, 3],
+        "points": 1
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "text": "Is this not a question?",
+        "answers": [1, 2]
+      },
+      {
+        "id": 2,
+        "text": "What is your favorite color?",
+        "answers": [3, 4, 5]
+      }
+    ]
+  }
+}
