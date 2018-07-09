@@ -5,20 +5,24 @@ import {
 } from '../helpers'
 
 function addAnswer(state, action) {
+  const {id, text, questionId, players} = action.payload
   const newAnswers = state.answers.concat({
-    id: action.id,
-    text: action.text,
-    answers: action.answers
+    id,
+    text,
+    questionId,
+    players
   })
 
   return updateObject(state, {answers: newAnswers})
 }
 
 function editAnswer(state, action) {
-  const newAnswers = updateItemInArray(state.answers, action.id, answer => {
+  const {id, text, questionId, players} = action.payload
+  const newAnswers = updateItemInArray(state.answers, id, answer => {
     return updateObject(answer, {
-      text: action.text,
-      answers: action.answers
+      text: text || answer.text,
+      questionId: questionId || answer.questionId,
+      players: players || answer.players
     })
   })
 
@@ -26,7 +30,8 @@ function editAnswer(state, action) {
 }
 
 function deleteAnswer(state, action) {
-  const newAnswers = state.answers.filter(answer => answer.id !== action.id)
+  let { id } = action.payload
+  const newAnswers = state.answers.filter(answer => answer.id !== id)
 
   return updateObject(state, {answers: newAnswers})
 }
@@ -37,7 +42,7 @@ function deleteAnswersByQuestionId(state, action) {
   return updateObject(state, {answers: newAnswers})
 }
 
-export default answersReducer = createReducer([], {
+export default createReducer([], {
   'ADD_ANSWER': addAnswer,
   'EDIT_ANSWER': editAnswer,
   'DELETE_ANSWER': deleteAnswer,

@@ -14,10 +14,10 @@ export const addAnswer = answer => {
   }
 }
 
-export const editAnswer = answer => {
+export const editAnswer = updatedAnswer => {
   return {
     type: 'EDIT_ANSWER',
-    answer
+    payload: updatedAnswer
   }
 }
 
