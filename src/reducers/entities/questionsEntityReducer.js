@@ -50,7 +50,7 @@ function associateAnswer(state, action) {
   return updateObject(state, {questions: newQuestions})
 }
 
-function disassociateAnswers(state, action) {
+function disassociateAnswer(state, action) {
   let { id: answerId } = action.payload
   const newQuestions = state.questions.map(question => {
     return updateObject(question, {
@@ -67,5 +67,5 @@ export default createReducer([], {
   'EDIT_QUESTION': editQuestion,
   'DELETE_QUESTION': deleteQuestion,
   'ADD_ANSWER': associateAnswer,
-  'DELETE_ANSWER': disassociateAnswers
+  'DELETE_ANSWER': disassociateAnswer
 })
