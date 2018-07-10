@@ -8,7 +8,7 @@ function associationExists(associations, entityIds) {
   return associations.filter(association => {
     return association[key0] === entityIds[key0]
       && association[key1] === entityIds[key1]
-  }).length === 0
+  }).length !== 0
 }
 
 function associateEntities(associations, entityIds) {
@@ -22,9 +22,9 @@ function associateEntities(associations, entityIds) {
 
 function associateAnswerPlayer(state, action) {
   const { answersPlayers } = state
-  const answerId = action.id
+  const { id: answerId, players } = action.payload
 
-  const newPlayerIds = action.players.filter(playerId => {
+  const newPlayerIds = players.filter(playerId => {
     return !associationExists(answersPlayers, {
       answerId,
       playerId
@@ -53,7 +53,7 @@ function associateAnswerPlayer(state, action) {
 function disassociateEntitiesAnswerPlayer(state, action) {
   const { answersPlayers } = state
   
-  const answersPlayers = answersPlayers.filter(answerPlayer => {
+  const newAnswersPlayers = answersPlayers.filter(answerPlayer => {
     return answerPlayer.answerId !== action.id
   })
 
@@ -62,9 +62,9 @@ function disassociateEntitiesAnswerPlayer(state, action) {
 
 function associatePlayerAnswer(state, action) {
   const { answersPlayers } = state
-  const playerId = action.id
+  const { id: playerId, answers } = action.payload
 
-  const newAnswerIds = action.answers.filter(answerId => {
+  const newAnswerIds = answers.filter(answerId => {
     return !associationExists(answersPlayers, {
       playerId,
       answerId
@@ -93,14 +93,14 @@ function associatePlayerAnswer(state, action) {
 function disassociateEntitiesPlayerAnswer(state, action) {
   const { answersPlayers } = state
   
-  const answersPlayers = answersPlayers.filter(answerPlayer => {
+  const newAnswersPlayers = answersPlayers.filter(answerPlayer => {
     return answerPlayer.playerId !== action.id
   })
 
   return updateObject(state, { answersPlayers: newAnswersPlayers })
 }
 
-export default answersPlayersReducer = createReducer([], {
+export default createReducer([], {
   'EDIT_ANSWER': associateAnswerPlayer,
   'DELETE_ANSWER': disassociateEntitiesAnswerPlayer,
   'EDIT_PLAYER': associatePlayerAnswer,

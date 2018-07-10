@@ -4,7 +4,6 @@ import { setQuestionId } from '../../../actions/questions'
 import { setAnswerId } from '../../../actions/answers'
 import df from 'deep-freeze-strict'
 import { setPlayerId } from '../../../actions/players';
-import { toBuffer } from 'ip';
 
 const testQuestions = [
   {
