@@ -8,8 +8,7 @@ export const addAnswer = answer => {
     payload: {
       id: answerId++,
       text: answer.text,
-      questionId: answer.questionId,
-      players: []
+      questionId: answer.questionId
     }
   }
 }

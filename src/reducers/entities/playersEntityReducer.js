@@ -5,10 +5,10 @@ import {
 } from '../helpers'
 
 function addPlayer(state, action) {
+  const {id, name} = action.payload
   const newPlayers = state.players.concat({
-    id: action.id,
-    text: action.text,
-    players: action.players
+    id,
+    name
   })
 
   return updateObject(state, {
@@ -35,7 +35,7 @@ function deletePlayer(state, action) {
   return updateObject(state, { players: newPlayers })
 }
 
-export default playersReducer = createReducer([], {
+export default createReducer([], {
   'ADD_PLAYER': addPlayer,
   'EDIT_PLAYER': editPlayer,
   'DELETE_PLAYER': deletePlayer
