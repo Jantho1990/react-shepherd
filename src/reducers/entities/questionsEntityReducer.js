@@ -29,14 +29,14 @@ function editQuestion(state, action) {
 }
 
 function deleteQuestion(state, action) {
-  let { id } = action.payload
+  const { id } = action.payload
   const newQuestions = state.questions.filter(question => question.id !== id)
 
   return updateObject(state, {questions: newQuestions})
 }
 
 function associateAnswer(state, action) {
-  let { id: answerId, questionId } = action.payload
+  const { id: answerId, questionId } = action.payload
   const newQuestions = updateItemInArray(state.questions, questionId, question => {
     return updateObject(question, {
       ...question,
@@ -51,7 +51,7 @@ function associateAnswer(state, action) {
 }
 
 function disassociateAnswer(state, action) {
-  let { id: answerId } = action.payload
+  const { id: answerId } = action.payload
   const newQuestions = state.questions.map(question => {
     return updateObject(question, {
       ...question,

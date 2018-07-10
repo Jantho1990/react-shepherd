@@ -30,14 +30,14 @@ function editAnswer(state, action) {
 }
 
 function deleteAnswer(state, action) {
-  let { id } = action.payload
+  const { id } = action.payload
   const newAnswers = state.answers.filter(answer => answer.id !== id)
 
   return updateObject(state, {answers: newAnswers})
 }
 
 function deleteAnswersByQuestionId(state, action) {
-  let { id: questionId } = action.payload
+  const { id: questionId } = action.payload
   const newAnswers = state.answers.filter(answer => answer.questionId !== questionId)
 
   return updateObject(state, {answers: newAnswers})
