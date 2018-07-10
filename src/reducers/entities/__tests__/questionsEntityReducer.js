@@ -152,13 +152,13 @@ describe('Question Entities', () => {
   })
 
   it('deletes a question', () => {
-    const id = testQuestions[0].id
-    const action = actions.questions.delete(id)
+    const questionId = 0
+    const action = actions.questions.delete(questionId)
 
     let newState = qr(df({...initialState}), df(action))
 
     expect(newState.questions.length).toBe(1)
-    expect(newState.questions.filter(q => q.id === id).length).toBe(0)
+    expect(newState.questions.filter(q => q.id === questionId).length).toBe(0)
   })
 
   it('updates its answers when a new answer is associated with it', () => {
