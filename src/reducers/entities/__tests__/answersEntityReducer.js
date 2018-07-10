@@ -2,6 +2,7 @@ import ar from '../answersEntityReducer'
 import actions from '../../../actions/actions'
 import { setQuestionId } from '../../../actions/questions'
 import { setAnswerId } from '../../../actions/answers'
+import { setPlayerId } from '../../../actions/players'
 import df from 'deep-freeze-strict'
 
 const testQuestions = [
@@ -60,8 +61,12 @@ const initialState = {
   players: testPlayers,
   questions: testQuestions
 }
-setQuestionId(2)
-setAnswerId(4)
+
+beforeEach(() => {
+  setAnswerId(4)
+  setPlayerId(3)
+  setQuestionId(2)
+})
 
 describe('Answer Entities', () => {
   it('creates a new answer', () => {
@@ -71,13 +76,31 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.add(answer)
 
-    const res = ar(df({...initialState}), df(action))
+    const newState = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(initialState.answers.length + 1)
-    let nta = res.answers[4]
+    expect(newState.answers.length).toBe(initialState.answers.length + 1)
+    let nta = newState.answers[4]
     expect(nta.id).toBe(4)
     expect(nta.text).toBe(answer.text)
     expect(nta.questionId).toBe(answer.questionId)
+  })
+
+  it('should not add new properties on create', () => {
+    const answer = {
+      text: 'I am a new answer!',
+      questionId: 1,
+      thisProp: 'Should not show up'
+    }
+    const action = actions.answers.add(answer)
+
+    const newState = ar(df({...initialState}), df(action))
+
+    expect(newState.answers.length).toBe(initialState.answers.length + 1)
+    let ntq = newState.answers[4]
+    expect(ntq.id).toBe(4)
+    expect(ntq.text).toBe(answer.text)
+    expect(ntq.questionId).toBe(answer.questionId)
+    expect(ntq.thisProp).toBeUndefined()
   })
 
   it('edits an existing answer', () => {
@@ -88,13 +111,32 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.edit(answer)
 
-    const res = ar(df({...initialState}), df(action))
+    const newState = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(initialState.answers.length)
-    let uta = res.answers[1]
+    expect(newState.answers.length).toBe(initialState.answers.length)
+    let uta = newState.answers[1]
     expect(uta.id).toBe(answer.id)
     expect(uta.text).toBe(answer.text)
     expect(uta.questionId).toBe(answer.questionId)
+  })
+
+  it('should not add new properties on edit', () => {
+    const answer = {
+      id: 1,
+      text: 'NEVER',
+      questionId: 1,
+      thisProp: 'Should not show up'
+    }
+    const action = actions.answers.edit(answer)
+
+    const newState = ar(df({...initialState}), df(action))
+
+    expect(newState.answers.length).toBe(initialState.answers.length)
+    let ntq = newState.answers[1]
+    expect(ntq.id).toBe(answer.id)
+    expect(ntq.text).toBe(answer.text)
+    expect(ntq.questionId).toBe(answer.questionId)
+    expect(ntq.thisProp).toBeUndefined()
   })
 
   it('should not need all properties in order to edit', () => {
@@ -104,10 +146,10 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.edit(answer)
 
-    const res = ar(df({...initialState}), df(action))
+    const newState = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(initialState.answers.length)
-    let uta = res.answers[0]
+    expect(newState.answers.length).toBe(initialState.answers.length)
+    let uta = newState.answers[0]
     expect(uta.id).toBe(answer.id)
     expect(uta.text).toBe(answer.text)
     expect(uta.questionId).toBe(1)
@@ -117,18 +159,18 @@ describe('Answer Entities', () => {
     const answerId = 0
     const action = actions.answers.delete(answerId)
 
-    const res = ar(df({...initialState}), df(action))
+    const newState = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(initialState.answers.length - 1)
-    expect(res.answers.filter(answer => answer.id === answerId).length).not.toBe(1)
+    expect(newState.answers.length).toBe(initialState.answers.length - 1)
+    expect(newState.answers.filter(answer => answer.id === answerId).length).not.toBe(1)
   })
 
   it('deletes any answers associated with a deleted question', () => {
     const questionId = 1
     const action = actions.questions.delete(questionId)
 
-    const res = ar(df({...initialState}), df(action))
+    const newState = ar(df({...initialState}), df(action))
 
-    expect(res.answers.length).toBe(2)
+    expect(newState.answers.length).toBe(2)
   })
 })

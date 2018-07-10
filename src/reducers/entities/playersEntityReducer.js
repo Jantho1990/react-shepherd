@@ -17,10 +17,10 @@ function addPlayer(state, action) {
 }
 
 function editPlayer(state, action) {
-  const newPlayers = updateItemInArray(state.players, action.id, player => {
+  const {id, name} = action.payload
+  const newPlayers = updateItemInArray(state.players, id, player => {
     return updateObject(player, {
-      text: action.text,
-      players: action.players
+      name: name || player.name
     })
   })
 
@@ -30,7 +30,8 @@ function editPlayer(state, action) {
 }
 
 function deletePlayer(state, action) {
-  const newPlayers = state.players.filter(player => player.id !== action.id)
+  const { id } = action.payload
+  const newPlayers = state.players.filter(player => player.id !== id)
 
   return updateObject(state, { players: newPlayers })
 }

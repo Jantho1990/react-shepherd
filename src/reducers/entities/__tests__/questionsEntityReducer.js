@@ -2,6 +2,7 @@ import qr from '../questionsEntityReducer'
 import actions from '../../../actions/actions'
 import { setQuestionId } from '../../../actions/questions'
 import { setAnswerId } from '../../../actions/answers'
+import { setPlayerId } from '../../../actions/players'
 import df from 'deep-freeze-strict'
 
 const testQuestions = [
@@ -21,12 +22,22 @@ const testAnswers = [
   {
     id: 0,
     text: 'Yes',
-    questionId: 2
+    questionId: 1
   },
   {
     id: 1,
     text: 'No',
-    questionId: 2
+    questionId: 1
+  },
+  {
+    id: 2,
+    text: 'Yes',
+    questionId: 0
+  },
+  {
+    id: 3,
+    text: 'No',
+    questionId: 0
   }
 ]
 
@@ -50,54 +61,93 @@ const initialState = {
   players: testPlayers,
   questions: testQuestions
 }
-setQuestionId(2)
-setAnswerId(2)
+
+beforeEach(() => {
+  setAnswerId(4)
+  setPlayerId(3)
+  setQuestionId(2)
+})
 
 describe('Question Entities', () => {
   it('creates a new question', () => {
-    const tq = {
+    const question = {
       text: 'Will this test succeed?',
       answers: []
     }
-    const action = actions.questions.add(tq)
+    const action = actions.questions.add(question)
 
     let newState = qr(df({...initialState}), df(action))
 
-    expect(newState.questions.length).toBe(3)
+    expect(newState.questions.length).toBe(initialState.questions.length + 1)
     expect(newState.questions[2].id).toBe(2)
-    expect(newState.questions[2].text).toBe(tq.text)
+    expect(newState.questions[2].text).toBe(question.text)
+  })
+
+  it('should not add new properties on create', () => {
+    const question = {
+      text: 'Will this test succeed?',
+      answers: [],
+      thisProp: 'Should not show up'
+    }
+    const action = actions.questions.add(question)
+
+    const newState = qr(df({...initialState}), df(action))
+
+    expect(newState.questions.length).toBe(initialState.questions.length + 1)
+    let ntq = newState.questions[2]
+    expect(ntq.id).toBe(2)
+    expect(ntq.text).toBe(question.text)
+    expect(ntq.answers).toEqual(question.answers)
+    expect(ntq.thisProp).toBeUndefined()
   })
 
   it('edits an existing question', () => {
-    let tq = {
-      ...testQuestions[1],
-      text: 'This is different?',
-      thisProp: 'Should not show up'
+    let question = {
+      id: 1,
+      text: 'This is different?'
     }
-    const action = actions.questions.edit(tq)
+    const action = actions.questions.edit(question)
 
     let newState = qr(df({...initialState}), df(action))
 
-    expect(newState.questions.length).toBe(2)
+    expect(newState.questions.length).toBe(initialState.questions.length)
     let utq = newState.questions[1]
-    expect(utq.text).toBe(tq.text)
-    expect(utq.id).toBe(tq.id)
+    expect(utq.text).toBe(question.text)
+    expect(utq.id).toBe(question.id)
     expect(utq.answers.length).toBe(2)
-    expect(utq.thisProp).toBeUndefined()
+  })
+
+  it('should not add new properties on edit', () => {
+    const question = {
+      id: 1,
+      text: 'This is different?',
+      answers: [],
+      thisProp: 'Should not show up'
+    }
+    const action = actions.questions.edit(question)
+
+    const newState = qr(df({...initialState}), df(action))
+
+    expect(newState.questions.length).toBe(initialState.questions.length)
+    let ntq = newState.questions[1]
+    expect(ntq.id).toBe(question.id)
+    expect(ntq.text).toBe(question.text)
+    expect(ntq.answers).toEqual(question.answers)
+    expect(ntq.thisProp).toBeUndefined()
   })
 
   it('should not need all properties in order to edit', () => {
-    let tq = {
+    let question = {
       id: 1,
       text: 'I should update even though I do not have answers'
     }
-    const action = actions.questions.edit(tq)
+    const action = actions.questions.edit(question)
 
     let newState = qr(df({...initialState}), df(action))
 
-    expect(newState.questions.length).toBe(2)
+    expect(newState.questions.length).toBe(initialState.questions.length)
     let utq = newState.questions[1]
-    expect(utq.text).toBe(tq.text)
+    expect(utq.text).toBe(question.text)
     expect(utq.answers.length).toBe(2)
   })
 
@@ -114,8 +164,7 @@ describe('Question Entities', () => {
   it('updates its answers when a new answer is associated with it', () => {
     const newAnswer = {
       text: 'I am a new answer!',
-      questionId: 0,
-      players: []
+      questionId: 0
     }
     const action = actions.answers.add(newAnswer)
 
@@ -123,7 +172,7 @@ describe('Question Entities', () => {
 
     let utq = newState.questions[0]
     expect(utq.answers.length).toBe(1)
-    expect(utq.answers[0]).toBe(2)
+    expect(utq.answers[0]).toBe(4)
   })
 
   it('disassociates an answer when it is deleted', () => {
