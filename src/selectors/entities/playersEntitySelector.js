@@ -6,7 +6,7 @@ export default class {
   sync(state, id) {
     const player = state.players.find(player => player.id === id)
     this.id = player.id
-    this.text = player.text
+    this.name = player.name
     this.answers = state.answerPlayers.filter(answerPlayer => {
       return answerPlayer.playerId === player.id
     }).map(answerPlayer => {

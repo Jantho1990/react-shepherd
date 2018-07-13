@@ -57,7 +57,12 @@ const testPlayers = [
 const initialState = {
   answers: testAnswers,
   players: testPlayers,
-  questions: testQuestions
+  questions: testQuestions,
+  answerPlayers: [
+    {id: '_0_0', answerId: 0, playerId: 0},
+    {id: '_0_2', answerId: 0, playerId: 2},
+    {id: '_1_1', answerId: 1, playerId: 1}
+  ]
 }
 
 beforeEach(() => {
@@ -75,5 +80,6 @@ describe('Questions EntitySelector', () => {
     expect(question.text).toBe(stateQuestion.text)
     expect(question.answers[0].text).toBe('Yes')
     expect(question.answers[1].text).toBe('No')
+    expect(question.answers[0].players[0].name).toBe('John Doe')
   })
 })

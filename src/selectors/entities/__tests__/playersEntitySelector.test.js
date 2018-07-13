@@ -77,7 +77,7 @@ describe('Players EntitySelector', () => {
     const statePlayer = initialState.players.find(player => player.id === 0)
 
     expect(player.id).toBe(statePlayer.id)
-    expect(player.text).toBe(statePlayer.text)
+    expect(player.name).toBe(statePlayer.name)
     expect(player.answers[0].text).toBe('Yes')
   })
 })

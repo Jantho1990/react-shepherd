@@ -78,6 +78,7 @@ describe('Answers EntitySelector', () => {
 
     expect(answer.id).toBe(stateAnswer.id)
     expect(answer.text).toBe(stateAnswer.text)
+    // console.log(answer.players)
     expect(answer.players[0].name).toBe('John Doe')
   })
 })
