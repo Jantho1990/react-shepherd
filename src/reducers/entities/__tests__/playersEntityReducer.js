@@ -1,5 +1,8 @@
-import pr from '../playersEntityReducer'
+import pr, {
+  playerEntitySelector as Player
+} from '../playersEntityReducer'
 import actions from '../../../actions/actions'
+import cloneDeep from 'lodash.clonedeep'
 import { setQuestionId } from '../../../actions/questions'
 import { setAnswerId } from '../../../actions/answers'
 import df from 'deep-freeze-strict'
@@ -59,8 +62,15 @@ const testPlayers = [
 const initialState = {
   answers: testAnswers,
   players: testPlayers,
-  questions: testQuestions
+  questions: testQuestions,
+  answerPlayers: [
+    {id: '_0_0', answerId: 0, playerId: 0},
+    {id: '_0_2', answerId: 0, playerId: 2},
+    {id: '_1_1', answerId: 1, playerId: 1}
+  ]
 }
+
+const copyOfState = () => cloneDeep(initialState)
 
 beforeEach(() => {
   setAnswerId(4)
@@ -75,7 +85,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.add(player)
 
-    const newState = pr(df({...initialState}), df(action))
+    const newState = pr(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length + 1)
     let ntp = newState.players[3]
@@ -90,7 +100,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.add(player)
 
-    const newState = pr(df({...initialState}), df(action))
+    const newState = pr(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length + 1)
     let ntp = newState.players[3]
@@ -106,7 +116,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.edit(player)
 
-    const newState = pr(df({...initialState}), df(action))
+    const newState = pr(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length)
     let utp = newState.players[0]
@@ -122,7 +132,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.edit(player)
 
-    const newState = pr(df({...initialState}), df(action))
+    const newState = pr(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length)
     let ntp = newState.players[1]
@@ -135,9 +145,20 @@ describe('Player Entities', () => {
     const playerId = 1
     const action = actions.players.delete(playerId)
 
-    const newState = pr(df({...initialState}), df(action))
+    const newState = pr(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length - 1)
     expect(newState.players.filter(player => player.id === playerId).length).not.toBe(1)
+  })
+})
+
+describe('Players EntitySelector', () => {
+  it('correctly computes normalized data', () => {
+    const player = new Player(initialState, 0)
+    const statePlayer = initialState.players.find(player => player.id === 0)
+
+    expect(player.id).toBe(statePlayer.id)
+    expect(player.name).toBe(statePlayer.name)
+    expect(player.answers[0].text).toBe('Yes')
   })
 })

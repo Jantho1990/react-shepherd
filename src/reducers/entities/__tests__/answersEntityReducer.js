@@ -1,5 +1,8 @@
-import ar from '../answersEntityReducer'
+import ar, {
+  answerEntitySelector as Answer
+} from '../answersEntityReducer'
 import actions from '../../../actions/actions'
+import cloneDeep from 'lodash.clonedeep'
 import { setQuestionId } from '../../../actions/questions'
 import { setAnswerId } from '../../../actions/answers'
 import { setPlayerId } from '../../../actions/players'
@@ -59,8 +62,15 @@ const testPlayers = [
 const initialState = {
   answers: testAnswers,
   players: testPlayers,
-  questions: testQuestions
+  questions: testQuestions,
+  answerPlayers: [
+    {id: '_0_0', answerId: 0, playerId: 0},
+    {id: '_0_2', answerId: 0, playerId: 2},
+    {id: '_1_1', answerId: 1, playerId: 1}
+  ]
 }
+
+const copyOfState = () => cloneDeep(initialState)
 
 beforeEach(() => {
   setAnswerId(4)
@@ -76,7 +86,7 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.add(answer)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(initialState.answers.length + 1)
     let nta = newState.answers[4]
@@ -93,7 +103,7 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.add(answer)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(initialState.answers.length + 1)
     let ntq = newState.answers[4]
@@ -111,7 +121,7 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.edit(answer)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(initialState.answers.length)
     let uta = newState.answers[1]
@@ -129,7 +139,7 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.edit(answer)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(initialState.answers.length)
     let ntq = newState.answers[1]
@@ -146,7 +156,7 @@ describe('Answer Entities', () => {
     }
     const action = actions.answers.edit(answer)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(initialState.answers.length)
     let uta = newState.answers[0]
@@ -159,7 +169,7 @@ describe('Answer Entities', () => {
     const answerId = 0
     const action = actions.answers.delete(answerId)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(initialState.answers.length - 1)
     expect(newState.answers.filter(answer => answer.id === answerId).length).not.toBe(1)
@@ -169,8 +179,20 @@ describe('Answer Entities', () => {
     const questionId = 1
     const action = actions.questions.delete(questionId)
 
-    const newState = ar(df({...initialState}), df(action))
+    const newState = ar(df(copyOfState()), df(action))
 
     expect(newState.answers.length).toBe(2)
+  })
+})
+
+describe('Answers EntitySelector', () => {
+  it('correctly computes normalized data', () => {
+    const answer = new Answer(initialState, 0)
+    const stateAnswer = initialState.answers.find(answer => answer.id === 0)
+
+    expect(answer.id).toBe(stateAnswer.id)
+    expect(answer.text).toBe(stateAnswer.text)
+    // console.log(answer.players)
+    expect(answer.players[0].name).toBe('John Doe')
   })
 })

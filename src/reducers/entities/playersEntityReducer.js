@@ -36,6 +36,16 @@ function deletePlayer(state, action) {
   return updateObject(state, { players: newPlayers })
 }
 
+export function playerEntitySelector(state, id) {
+  let player = state.players.find(player => player.id === id)
+  player.answers = state.answerPlayers.filter(answerPlayer => {
+    return answerPlayer.playerId === player.id
+  }).map(answerPlayer => {
+    return state.answers.find(answer => answer.id === answerPlayer.answerId)
+  })
+  return player
+}
+
 export default createReducer([], {
   'ADD_PLAYER': addPlayer,
   'EDIT_PLAYER': editPlayer,
