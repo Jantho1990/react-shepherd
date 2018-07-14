@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "deep-freeze-strict": "^1.1.1",
+    "lodash.clone": "^4.5.0",
+    "lodash.clonedeep": "^4.5.0",
     "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0"
   }
