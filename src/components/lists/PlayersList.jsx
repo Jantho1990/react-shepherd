@@ -35,9 +35,8 @@ class PlayersList extends Component {
 
 export default connect(
   (state) => {
-    console.log(state)
     return {
-      players: allPlayers(state)
+      players: allPlayers(state.entities)
     }
   }
 )(PlayersList)
