@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PlayerViewForm from '../forms/PlayerViewForm'
+import {
+  playerEntitySelector as Player,
+  playersEntitySelector as allPlayers
+} from '../../reducers/entities/playersEntityReducer'
 
 class PlayersList extends Component {
   constructor(props) {
@@ -31,8 +35,9 @@ class PlayersList extends Component {
 
 export default connect(
   (state) => {
+    console.log(state)
     return {
-      players: state.players
+      players: allPlayers(state)
     }
   }
 )(PlayersList)

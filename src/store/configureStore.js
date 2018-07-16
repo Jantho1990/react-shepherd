@@ -1,19 +1,13 @@
 import { compose, combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import {
-  answersReducer,
-  gamesReducer,
-  playersReducer,
-  questionsReducer
+  entitiesReducer as entities
 } from '../reducers/reducers'
 
 
 export const configure = (initialState = {}) => {
   const reducer = combineReducers({
-    answers: answersReducer,
-    games: gamesReducer,
-    players: playersReducer,
-    questions: questionsReducer
+    entities
   })
   
   const store = createStore(reducer, initialState, compose(

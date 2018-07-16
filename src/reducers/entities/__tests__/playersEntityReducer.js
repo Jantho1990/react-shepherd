@@ -1,5 +1,6 @@
 import pr, {
-  playerEntitySelector as Player
+  playerEntitySelector as Player,
+  playersEntitySelector as allPlayers
 } from '../playersEntityReducer'
 import actions from '../../../actions/actions'
 import cloneDeep from 'lodash.clonedeep'
@@ -153,7 +154,18 @@ describe('Player Entities', () => {
 })
 
 describe('Players EntitySelector', () => {
-  it('correctly computes normalized data', () => {
+  it('selects all players', () => {
+    const players = allPlayers(initialState)
+    expect(players.length).toBe(initialState.players.length)
+    for (let i = 0; i < players.length; i++) {
+      expect(players[i].id).toBe(initialState.players[i].id)
+      expect(players[i].name).toBe(initialState.players[i].name)
+      const initialAnswers = initialState.answerPlayers.filter(ap => ap.playerId === players[i].id)
+      expect(players[i].answers.length).toBe(initialAnswers.length)
+    }
+  })
+
+  it('correctly computes normalized data for single selection', () => {
     const player = new Player(initialState, 0)
     const statePlayer = initialState.players.find(player => player.id === 0)
 

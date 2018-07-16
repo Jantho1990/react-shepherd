@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux'
-import questionsReducer from 'questions'
+import answers from './answersEntityReducer'
+import answersPlayers from './answersPlayersEntityReducer'
+import players from './playersEntityReducer'
+import questions from './questionsEntityReducer'
 
-export default entitiesReducer = combineReducers({
-  questions: questionsReducer
+export default combineReducers({
+  answers,
+  answersPlayers,
+  players,
+  questions
 })
