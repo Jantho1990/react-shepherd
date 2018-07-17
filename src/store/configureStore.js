@@ -2,10 +2,9 @@ import { compose, combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import {
   entitiesReducer as entities,
-  defaultState
 } from '../reducers/reducers'
 
-export const configure = (initialState = defaultState) => {
+export const configure = (initialState = {}) => {
   const reducer = combineReducers({
     entities
   })

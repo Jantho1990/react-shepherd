@@ -24,6 +24,10 @@ function associateAnswerPlayer(state, action) {
   const { answersPlayers } = state
   const { id: answerId, players } = action.payload
 
+  if (players === undefined) {
+    return state
+  }
+
   const newPlayerIds = players.filter(playerId => {
     return !associationExists(answersPlayers, {
       answerId,
@@ -65,6 +69,10 @@ function associatePlayerAnswer(state, action) {
   const { answersPlayers } = state
   const { id: playerId, answers } = action.payload
 
+  if (answers === undefined) {
+    return state
+  }
+
   const newAnswerIds = answers.filter(answerId => {
     return !associationExists(answersPlayers, {
       playerId,
@@ -102,9 +110,9 @@ function disassociateEntitiesPlayerAnswer(state, action) {
   return updateObject(state, { answersPlayers: newAnswersPlayers })
 }
 
-export default createReducer([], {
+export default {
   'EDIT_ANSWER': associateAnswerPlayer,
   'DELETE_ANSWER': disassociateEntitiesAnswerPlayer,
   'EDIT_PLAYER': associatePlayerAnswer,
   'DELETE_PLAYER': disassociateEntitiesPlayerAnswer
-})
+}

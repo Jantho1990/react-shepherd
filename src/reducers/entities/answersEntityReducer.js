@@ -45,7 +45,7 @@ function deleteAnswersByQuestionId(state, action) {
 
 export function answerEntitySelector(state, id) {
   let answer = state.answers.find(answer => answer.id === id)
-  answer.players = state.answerPlayers.filter(answerPlayer => {
+  answer.players = state.answersPlayers.filter(answerPlayer => {
     return answerPlayer.answerId === answer.id
   }).map(answerPlayer => {
     return state.players.find(player => player.id === answerPlayer.playerId)
@@ -53,9 +53,9 @@ export function answerEntitySelector(state, id) {
   return answer
 }
 
-export default createReducer([], {
+export default {
   'ADD_ANSWER': addAnswer,
   'EDIT_ANSWER': editAnswer,
   'DELETE_ANSWER': deleteAnswer,
   'DELETE_QUESTION': deleteAnswersByQuestionId
-})
+}

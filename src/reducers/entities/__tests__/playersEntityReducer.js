@@ -1,4 +1,5 @@
-import pr, {
+import er from '../index'
+import {
   playerEntitySelector as Player,
   playersEntitySelector as allPlayers
 } from '../playersEntityReducer'
@@ -64,7 +65,7 @@ const initialState = {
   answers: testAnswers,
   players: testPlayers,
   questions: testQuestions,
-  answerPlayers: [
+  answersPlayers: [
     {id: '_0_0', answerId: 0, playerId: 0},
     {id: '_0_2', answerId: 0, playerId: 2},
     {id: '_1_1', answerId: 1, playerId: 1}
@@ -86,7 +87,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.add(player)
 
-    const newState = pr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length + 1)
     let ntp = newState.players[3]
@@ -101,7 +102,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.add(player)
 
-    const newState = pr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length + 1)
     let ntp = newState.players[3]
@@ -117,7 +118,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.edit(player)
 
-    const newState = pr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length)
     let utp = newState.players[0]
@@ -133,7 +134,7 @@ describe('Player Entities', () => {
     }
     const action = actions.players.edit(player)
 
-    const newState = pr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length)
     let ntp = newState.players[1]
@@ -146,7 +147,7 @@ describe('Player Entities', () => {
     const playerId = 1
     const action = actions.players.delete(playerId)
 
-    const newState = pr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.players.length).toBe(initialState.players.length - 1)
     expect(newState.players.filter(player => player.id === playerId).length).not.toBe(1)
@@ -160,7 +161,7 @@ describe('Players EntitySelector', () => {
     for (let i = 0; i < players.length; i++) {
       expect(players[i].id).toBe(initialState.players[i].id)
       expect(players[i].name).toBe(initialState.players[i].name)
-      const initialAnswers = initialState.answerPlayers.filter(ap => ap.playerId === players[i].id)
+      const initialAnswers = initialState.answersPlayers.filter(ap => ap.playerId === players[i].id)
       expect(players[i].answers.length).toBe(initialAnswers.length)
     }
   })

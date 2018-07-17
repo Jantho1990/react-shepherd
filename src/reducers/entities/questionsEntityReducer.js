@@ -67,7 +67,7 @@ export function questionEntitySelector(state, id) {
   question.answers = question.answers.map(answerId => {
     return state.answers.find(answer => answer.id === answerId)
   }).map(answer => {
-    answer.players = state.answerPlayers.filter(answerPlayer => {
+    answer.players = state.answersPlayers.filter(answerPlayer => {
       return answerPlayer.answerId === answer.id
     }).map(answerPlayer => {
       return state.players.find(player => player.id === answerPlayer.playerId)
@@ -77,10 +77,10 @@ export function questionEntitySelector(state, id) {
   return question
 }
 
-export default createReducer([], {
+export default {
   'ADD_QUESTION': addQuestion,
   'EDIT_QUESTION': editQuestion,
   'DELETE_QUESTION': deleteQuestion,
   'ADD_ANSWER': associateAnswer,
   'DELETE_ANSWER': disassociateAnswer
-})
+}

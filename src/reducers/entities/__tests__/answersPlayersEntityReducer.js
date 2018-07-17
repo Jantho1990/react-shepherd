@@ -1,4 +1,4 @@
-import apr from '../answersPlayersEntityReducer'
+import er from '../index'
 import actions from '../../../actions/actions'
 import { setAnswerId } from '../../../actions/answers'
 import { setPlayerId } from '../../../actions/players';
@@ -77,7 +77,7 @@ describe('AnswerPlayer Entities', () => {
     }
     const action = actions.answers.edit(answer)
 
-    const newState = apr(df({...initialState}), df(action))
+    const newState = er(df({...initialState}), df(action))
 
     expect(newState.answersPlayers.length).toBe(1)
     expect(newState.answersPlayers[0].answerId).toBe(answer.id)
@@ -91,7 +91,7 @@ describe('AnswerPlayer Entities', () => {
     }
     const action = actions.players.edit(player)
 
-    const newState = apr(df({ ...initialState
+    const newState = er(df({ ...initialState
     }), df(action))
 
     expect(newState.answersPlayers.length).toBe(1)
@@ -113,7 +113,7 @@ describe('AnswerPlayer Entities', () => {
     let newState = { ...initialState}
     answers.forEach(answer => {
       const action = actions.answers.edit(answer)
-      newState = apr(df({...newState}), df(action))
+      newState = er(df({...newState}), df(action))
     })
 
     expect(newState.answersPlayers.length).toBe(2)
@@ -135,7 +135,7 @@ describe('AnswerPlayer Entities', () => {
     let newState = { ...initialState}
     players.forEach(player => {
       const action = actions.players.edit(player)
-      newState = apr(df({...newState}), df(action))
+      newState = er(df({...newState}), df(action))
     })
 
     expect(newState.answersPlayers.length).toBe(2)
@@ -161,7 +161,7 @@ describe('AnswerPlayer Entities', () => {
       actions.players.edit(player)
     ]
     entityActions.forEach(action => {
-      newState = apr(df({...newState}), df(action))
+      newState = er(df({...newState}), df(action))
     })
 
     expect(newState.answersPlayers.length).toBe(1)
@@ -184,7 +184,7 @@ describe('AnswerPlayer Entities', () => {
     let newState = { ...initialState}
     answers.forEach(answer => {
       const action = actions.answers.edit(answer)
-      newState = apr(df({...newState}), df(action))
+      newState = er(df({...newState}), df(action))
     })
 
     // Add a different association so we can prove not all associations got nuked
@@ -193,13 +193,13 @@ describe('AnswerPlayer Entities', () => {
       players: [1]
     }
     const otherAction = actions.answers.edit(otherAnswer)
-    newState = apr(df({...newState}), df(otherAction))
+    newState = er(df({...newState}), df(otherAction))
     expect(newState.answersPlayers.length).toBe(3)
 
     // Now delete one of the answers and verify all its associations are also deleted
     const deleteAnswerId = 1
     const deleteAction = actions.answers.delete(deleteAnswerId)
-    newState = apr(df({...newState}), df(deleteAction))
+    newState = er(df({...newState}), df(deleteAction))
 
     expect(newState.answersPlayers.length).toBe(1)
     expect(newState.answersPlayers.filter(ap => ap.answerId === deleteAnswerId).length).toBe(0)
@@ -220,7 +220,7 @@ describe('AnswerPlayer Entities', () => {
     let newState = { ...initialState}
     players.forEach(player => {
       const action = actions.players.edit(player)
-      newState = apr(df({...newState}), df(action))
+      newState = er(df({...newState}), df(action))
     })
 
     // Add a different association so we can prove not all associations got nuked
@@ -229,13 +229,13 @@ describe('AnswerPlayer Entities', () => {
       answers: [1]
     }
     const otherAction = actions.players.edit(otherPlayer)
-    newState = apr(df({...newState}), df(otherAction))
+    newState = er(df({...newState}), df(otherAction))
     expect(newState.answersPlayers.length).toBe(3)
 
     // Now delete one of the answers and verify all its associations are also deleted
     const deletePlayerId = 1
     const deleteAction = actions.players.delete(deletePlayerId)
-    newState = apr(df({...newState}), df(deleteAction))
+    newState = er(df({...newState}), df(deleteAction))
 
     expect(newState.answersPlayers.length).toBe(1)
     expect(newState.answersPlayers.filter(ap => ap.playerId === deletePlayerId).length).toBe(0)

@@ -1,4 +1,5 @@
-import qr, {
+import er from '../index'
+import {
   questionEntitySelector as Question
 } from '../questionsEntityReducer'
 import actions from '../../../actions/actions'
@@ -63,7 +64,7 @@ const initialState = {
   answers: testAnswers,
   players: testPlayers,
   questions: testQuestions,
-  answerPlayers: [
+  answersPlayers: [
     {id: '_0_0', answerId: 0, playerId: 0},
     {id: '_0_2', answerId: 0, playerId: 2},
     {id: '_1_1', answerId: 1, playerId: 1}
@@ -86,7 +87,7 @@ describe('Question Entities', () => {
     }
     const action = actions.questions.add(question)
 
-    let newState = qr(df(copyOfState()), df(action))
+    let newState = er(df(copyOfState()), df(action))
 
     expect(newState.questions.length).toBe(initialState.questions.length + 1)
     expect(newState.questions[2].id).toBe(2)
@@ -101,7 +102,7 @@ describe('Question Entities', () => {
     }
     const action = actions.questions.add(question)
 
-    const newState = qr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.questions.length).toBe(initialState.questions.length + 1)
     let ntq = newState.questions[2]
@@ -118,7 +119,7 @@ describe('Question Entities', () => {
     }
     const action = actions.questions.edit(question)
 
-    let newState = qr(df(copyOfState()), df(action))
+    let newState = er(df(copyOfState()), df(action))
 
     expect(newState.questions.length).toBe(initialState.questions.length)
     let utq = newState.questions[1]
@@ -136,7 +137,7 @@ describe('Question Entities', () => {
     }
     const action = actions.questions.edit(question)
 
-    const newState = qr(df(copyOfState()), df(action))
+    const newState = er(df(copyOfState()), df(action))
 
     expect(newState.questions.length).toBe(initialState.questions.length)
     let ntq = newState.questions[1]
@@ -153,7 +154,7 @@ describe('Question Entities', () => {
     }
     const action = actions.questions.edit(question)
 
-    let newState = qr(df(copyOfState()), df(action))
+    let newState = er(df(copyOfState()), df(action))
 
     expect(newState.questions.length).toBe(initialState.questions.length)
     let utq = newState.questions[1]
@@ -165,7 +166,7 @@ describe('Question Entities', () => {
     const questionId = 0
     const action = actions.questions.delete(questionId)
 
-    let newState = qr(df(copyOfState()), df(action))
+    let newState = er(df(copyOfState()), df(action))
 
     expect(newState.questions.length).toBe(1)
     expect(newState.questions.filter(q => q.id === questionId).length).toBe(0)
@@ -178,7 +179,7 @@ describe('Question Entities', () => {
     }
     const action = actions.answers.add(newAnswer)
 
-    let newState = qr(df(copyOfState()), df(action))
+    let newState = er(df(copyOfState()), df(action))
 
     let utq = newState.questions[0]
     expect(utq.answers.length).toBe(1)
@@ -189,7 +190,7 @@ describe('Question Entities', () => {
     const deletedAnswerId = 0
     const action = actions.answers.delete(deletedAnswerId)
 
-    let newState = qr(df(copyOfState()), df(action))
+    let newState = er(df(copyOfState()), df(action))
 
     let utq = newState.questions[1]
     expect(utq.answers.length).not.toBe(2)

@@ -5,10 +5,8 @@ import {
 } from '../helpers'
 import cloneDeep from 'lodash.clonedeep'
 
-export const defaultState = []
-
 function addPlayer(state, action) {
-  console.log(state)
+  // console.log(state)
   const {id, name} = action.payload
   const newPlayers = state.players.concat({
     id,
@@ -44,7 +42,7 @@ export function playersEntitySelector(state) {
   return state.players.map(player => {
     return {
       ...player,
-      answers: state.answerPlayers.filter(answerPlayer => {
+      answers: state.answersPlayers.filter(answerPlayer => {
         return answerPlayer.playerId === player.id
       }).map(answerPlayer => {
         return state.answers.find(answer => answer.id === answerPlayer.answerId)
@@ -55,7 +53,7 @@ export function playersEntitySelector(state) {
 
 export function playerEntitySelector(state, id) {
   let player = state.players.find(player => player.id === id)
-  player.answers = state.answerPlayers.filter(answerPlayer => {
+  player.answers = state.answersPlayers.filter(answerPlayer => {
     return answerPlayer.playerId === player.id
   }).map(answerPlayer => {
     return state.answers.find(answer => answer.id === answerPlayer.answerId)
@@ -63,8 +61,8 @@ export function playerEntitySelector(state, id) {
   return player
 }
 
-export default createReducer([], {
+export default {
   'ADD_PLAYER': addPlayer,
   'EDIT_PLAYER': editPlayer,
   'DELETE_PLAYER': deletePlayer
-})
+}

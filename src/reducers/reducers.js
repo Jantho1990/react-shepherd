@@ -1,10 +1,4 @@
-import entitiesReducer, {
-  defaultState as entitiesDefaultState
-} from './entities/'
-
-export const defaultState = {
-  entities: entitiesDefaultState
-}
+import entitiesReducer from './entities/'
 
 export {
   entitiesReducer
