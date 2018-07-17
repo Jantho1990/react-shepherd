@@ -8,6 +8,7 @@ import cloneDeep from 'lodash.clonedeep'
 export const defaultState = []
 
 function addPlayer(state, action) {
+  console.log(state)
   const {id, name} = action.payload
   const newPlayers = state.players.concat({
     id,

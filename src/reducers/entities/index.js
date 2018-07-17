@@ -10,9 +10,9 @@ export const defaultState = {
   players: playersDefaultState
 }
 
-export default combineReducers({
+export default {
   answers,
   answersPlayers,
   players,
   questions
-})
+}

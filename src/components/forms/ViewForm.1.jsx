@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import { format } from 'path';
+import { Component } from 'react'
 
 class ViewForm extends Component {
     reduxAction () {
@@ -18,15 +17,6 @@ class ViewForm extends Component {
             default:
                 break
         }
-    }
-
-    render () {
-        const { onSubmit, children } = this.props
-        return (
-            <form onSubmit={onSubmit} className="view-form">
-                {children}
-            </form>
-        )
     }
 }
 

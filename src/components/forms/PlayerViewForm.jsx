@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ViewForm from './ViewForm'
 import { connect } from 'react-redux'
 
-class PlayerForm extends ViewForm {
+class PlayerForm extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    // this.state = {}
   }
 
   handleSubmit(e) {
@@ -16,12 +16,8 @@ class PlayerForm extends ViewForm {
   }
 
   reduxAction() {
-    return {
-      type: 'ADD_PLAYER',
-      'player': {
-        name: this.refs.playerName.value
-      }
-    }
+    console.log(this.props)
+    return this.props.onAddPlayer({name: this.refs.playerName})
   }
 
   render() {

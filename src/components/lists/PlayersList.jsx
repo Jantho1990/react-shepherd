@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PlayerViewForm from '../forms/PlayerViewForm'
+import ViewForm from '../forms/ViewForm'
 import {
   playerEntitySelector as Player,
   playersEntitySelector as allPlayers
 } from '../../reducers/entities/playersEntityReducer'
+import actions from '../../actions/actions'
 
 class PlayersList extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class PlayersList extends Component {
     this.state = {}
   }
   render() {
-    let { players } = this.props
+    let { players, onAddPlayer } = this.props
     let renderPlayers = () => {
       if (players.length === 0) {
         return (
@@ -21,13 +22,25 @@ class PlayersList extends Component {
       }
       return players.map(player => {
         return (
-          <PlayerViewForm key={player.id} {...player}/>
+          <ViewForm
+            key={player.id}
+            onSubmit={onAddPlayer}
+          >
+            <input type="text" ref="playerName" defaultValue={player.name}/>
+            <button type="submit">Add</button>
+          </ViewForm>
         )
       })
     }
     return (
       <div className="view-list">
         {renderPlayers()}
+        <ViewForm
+            onSubmit={onAddPlayer}
+          >
+            <input type="text" ref="playerName"/>
+            <button type="submit">Add</button>
+          </ViewForm>
       </div>
     )
   }
@@ -37,6 +50,11 @@ export default connect(
   (state) => {
     return {
       players: allPlayers(state.entities)
+    }
+  },
+  (dispatch) => {
+    return {
+      onAddPlayer: player => dispatch(actions.players.add(player))
     }
   }
 )(PlayersList)

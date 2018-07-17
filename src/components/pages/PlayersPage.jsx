@@ -12,7 +12,7 @@ class PlayersPage extends Component {
       <div className="page players">
         <h1>Players Page</h1>
         <PlayersList/>
-        <PlayerViewForm/>
+        {/* <PlayerViewForm/> */}
       </div>
     )
   }
