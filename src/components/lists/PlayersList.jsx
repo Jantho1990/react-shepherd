@@ -11,9 +11,26 @@ class PlayersList extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.onSubmitAdd = this.onSubmitAdd.bind(this)
+    this.onSubmitEdit = this.onSubmitEdit.bind(this)
   }
+
+  onSubmitAdd() {
+    const name = this.refs.newPlayerName.value
+    console.log('refs', this.refs)
+    console.log('name', name)
+    this.props.onAddPlayer({name})
+  }
+
+  onSubmitEdit() {
+    const name = this.refs.playerName.value
+    const id = this.refs.playerId.value
+    this.props.onEditPlayer({id, name})
+  }
+
   render() {
     let { players, onAddPlayer } = this.props
+    let { onSubmitAdd, onSubmitEdit } = this
     let renderPlayers = () => {
       if (players.length === 0) {
         return (
@@ -23,11 +40,12 @@ class PlayersList extends Component {
       return players.map(player => {
         return (
           <ViewForm
-            key={player.id}
-            onSubmit={onAddPlayer}
+            key={`player${player.id}`}
+            onSubmit={onSubmitEdit}
           >
+            <input type="hidden" ref="playerId" defaultValue={player.id}/>
             <input type="text" ref="playerName" defaultValue={player.name}/>
-            <button type="submit">Add</button>
+            <button type="submit">Edit</button>
           </ViewForm>
         )
       })
@@ -36,9 +54,9 @@ class PlayersList extends Component {
       <div className="view-list">
         {renderPlayers()}
         <ViewForm
-            onSubmit={onAddPlayer}
+            onSubmit={onSubmitAdd}
           >
-            <input type="text" ref="playerName"/>
+            <input type="text" ref="newPlayerName"/>
             <button type="submit">Add</button>
           </ViewForm>
       </div>
@@ -54,7 +72,8 @@ export default connect(
   },
   (dispatch) => {
     return {
-      onAddPlayer: player => dispatch(actions.players.add(player))
+      onAddPlayer: player => dispatch(actions.players.add(player)),
+      onEditPlayer: player => dispatch(actions.players.edit(player))
     }
   }
 )(PlayersList)
