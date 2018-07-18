@@ -17,14 +17,13 @@ class PlayersList extends Component {
 
   onSubmitAdd() {
     const name = this.refs.newPlayerName.value
-    console.log('refs', this.refs)
-    console.log('name', name)
     this.props.onAddPlayer({name})
+    this.refs.newPlayerName.value = ''
   }
 
   onSubmitEdit() {
     const name = this.refs.playerName.value
-    const id = this.refs.playerId.value
+    const id = Number(this.refs.playerId.value)
     this.props.onEditPlayer({id, name})
   }
 
