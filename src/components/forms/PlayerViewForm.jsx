@@ -1,34 +1,64 @@
 import React, { Component } from 'react'
-import ViewForm from './ViewForm'
-import { connect } from 'react-redux'
+import { format } from 'path';
 
-class PlayerForm extends Component {
+class PlayerViewForm extends Component {
   constructor(props) {
     super(props)
-    // this.state = {}
+    const { player } = this.props
+    this.state = {
+      player: {
+        ...player
+      }
+    }
+
+    this.onInputChange = this.onInputChange.bind(this)
+    this.handleSubmit = this.props.onSubmit.bind(this)
   }
 
-  handleSubmit(e) {
-    this.submitData(e, () => {
-      this.refs.playerName.value = ''
-      this.refs.playerName.focus()
-    })
+  onInputChange(e) {
+    console.log('on')
+    const { name, value } = e.target
+    switch (name) {
+      case 'id':
+        this.setState({
+          ...this.state,
+          player: {
+            ...this.state.player,
+            id: value
+          }
+        })
+        break
+      case 'name':
+        this.setState({
+          ...this.state,
+          player: {
+            ...this.state.player,
+            name: value
+          }
+        })
+        break
+      default:
+        throw new Error('Unidentified input.')
+    }
   }
 
-  reduxAction() {
-    console.log(this.props)
-    return this.props.onAddPlayer({name: this.refs.playerName})
+  onSubmit() {
+    const name = this.state.player.name
+    
   }
 
   render() {
-    let { name } = this.props
+    const { onSubmit } = this.props
+    const { player } = this.state
+    const { onInputChange, handleSubmit } = this
     return (
-      <form action="" className="view-form player-view-form" onKeyPress={e => this.handleSubmit(e)}>
-        <input type="text" ref="playerName" defaultValue={name}/>
-        <button type="submit">Add</button>
+      <form onSubmit={handleSubmit} className="view-form">
+        <input type="hidden" name="id" ref="playerId" defaultValue={player.id} onChange={onInputChange} />
+        <input type="text" name="name" ref="playerName" defaultValue={player.name} onChange = { onInputChange } />
+        <button type="submit">Edit</button>
       </form>
     )
   }
 }
 
-export default connect()(PlayerForm)
+export default PlayerViewForm

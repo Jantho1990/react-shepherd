@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ViewForm from '../forms/ViewForm'
+import PlayerViewForm from '../forms/PlayerViewForm'
 import {
   playerEntitySelector as Player,
   playersEntitySelector as allPlayers
@@ -11,17 +11,18 @@ class PlayersList extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.onSubmitAdd = this.onSubmitAdd.bind(this)
-    this.onSubmitEdit = this.onSubmitEdit.bind(this)
+    this.handleSubmitAdd = this.handleSubmitAdd.bind(this)
+    this.handleSubmitEdit = this.handleSubmitEdit.bind(this)
   }
 
-  onSubmitAdd() {
-    const name = this.refs.newPlayerName.value
-    this.props.onAddPlayer({name})
-    this.refs.newPlayerName.value = ''
+  handleSubmitAdd(e) {
+    const action = this.props.onAddPlayer
+    return function () {
+      action(this.state.player)
+    }
   }
 
-  onSubmitEdit() {
+  handleSubmitEdit() {
     const name = this.refs.playerName.value
     const id = Number(this.refs.playerId.value)
     this.props.onEditPlayer({id, name})
@@ -29,7 +30,7 @@ class PlayersList extends Component {
 
   render() {
     let { players, onAddPlayer } = this.props
-    let { onSubmitAdd, onSubmitEdit } = this
+    let { handleSubmitAdd, handleSubmitEdit } = this
     let renderPlayers = () => {
       if (players.length === 0) {
         return (
@@ -38,26 +39,20 @@ class PlayersList extends Component {
       }
       return players.map(player => {
         return (
-          <ViewForm
+          <PlayerViewForm
             key={`player${player.id}`}
-            onSubmit={onSubmitEdit}
-          >
-            <input type="hidden" ref="playerId" defaultValue={player.id}/>
-            <input type="text" ref="playerName" defaultValue={player.name}/>
-            <button type="submit">Edit</button>
-          </ViewForm>
+            {...player}
+            onSubmit={handleSubmitEdit}
+          />
         )
       })
     }
     return (
       <div className="view-list">
         {renderPlayers()}
-        <ViewForm
-            onSubmit={onSubmitAdd}
-          >
-            <input type="text" ref="newPlayerName"/>
-            <button type="submit">Add</button>
-          </ViewForm>
+        <PlayerViewForm
+          onSubmit={handleSubmitAdd()}
+        />
       </div>
     )
   }

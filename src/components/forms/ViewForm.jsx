@@ -20,6 +20,10 @@ class ViewForm extends Component {
         }
     }
 
+    onInputChange() {
+        console.log('on')
+    }
+
     render () {
         const { onSubmit, children } = this.props
         return (
